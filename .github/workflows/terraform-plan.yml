@@ -1,0 +1,46 @@
+name: "Terraform CI"
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  terraform:
+    name: "Terraform Plan & Validate"
+    runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        working-directory: ./terraform
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.0
+
+      - name: Terraform Format Check
+        id: fmt
+        run: terraform fmt -check
+
+      - name: Terraform Init
+        id: init
+        run: terraform init -backend=false # Skip backend for CI check
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        id: plan
+        if: github.event_name == 'pull_request'
+        # Note: In a real env, you would need AWS credentials in GitHub Secrets
+        # Since this is a public portfolio, we run a speculative plan or skip if no creds
+        run: echo "Skipping plan execution as AWS credentials are not injected in this demo context"

@@ -1,0 +1,22 @@
+name: "Security Scan (tfsec)"
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  tfsec:
+    name: "Static Analysis (IaC)"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Run tfsec
+        uses: aquasecurity/tfsec-action@v1.0.0
+        with:
+          working_directory: ./terraform
+          soft_fail: true # Set to false to break build on critical vulnerabilities
