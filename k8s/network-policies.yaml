@@ -1,0 +1,57 @@
+# 1. DEFAULT DENY ALL
+# The "Iron Gate". No traffic passes unless explicitly allowed.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: default
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+---
+# 2. ALLOW DNS LOOKUP (Essential)
+# Without this, pods cannot resolve Service names or external URLs.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-dns
+  namespace: default
+spec:
+  podSelector: {}
+  policyTypes:
+  - Egress
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+      podSelector:
+        matchLabels:
+          k8s-app: kube-dns
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+---
+# 3. ALLOW INGRESS TO WAF-PROXY
+# Only allow traffic to port 8080 for the application pods
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-waf-ingress
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: waf-proxy
+  policyTypes:
+  - Ingress
+  ingress:
+  - ports:
+    - protocol: TCP
+      port: 8080
+    # In a real PROD env, strictly define 'from' using namespaceSelector
+    # to only allow the Ingress Controller.
