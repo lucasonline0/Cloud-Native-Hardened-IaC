@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: waf-proxy-svc
+  namespace: default
+spec:
+  type: ClusterIP # Internal only. Exposed via Ingress.
+  selector:
+    app: waf-proxy
+  ports:
+    - port: 80         # Port exposed internally to other services
+      targetPort: 8080 # Container port (Non-root Nginx)
+      protocol: TCP
