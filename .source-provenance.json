@@ -1,0 +1,10 @@
+{
+  "format": "source-provenance/v1",
+  "maintainer": "Lucas Madureira (@lucasonline0)",
+  "repository": "lucasonline0/Cloud-Native-Hardened-IaC",
+  "canonical_url": "https://github.com/lucasonline0/Cloud-Native-Hardened-IaC",
+  "fingerprint": "LM-PROV-2026-309B0016A187",
+  "recorded_on": "2026-09-01",
+  "scope": "repository lineage and maintained source",
+  "note": "Git history remains the authoritative record of individual contributions."
+}
