@@ -1,11 +1,11 @@
 # Cloud-Native Hardened IaC
 
 ## Overview
-This repository serves as a high-performance portfolio demonstrating advanced Infrastructure as Code (IaC), Cloud-Native Security, and DevOps practices. It orchestrates a secure, scalable environment on AWS using Terraform and Kubernetes (EKS), adhering to strict security standards including Zero Trust networking and CIS benchmarks.
+This repository contains a reference architecture for hardened AWS infrastructure using Terraform and Kubernetes (EKS), with a focus on Infrastructure as Code, Cloud-Native Security, and DevSecOps practices.
 
 ## Architecture
 
-The infrastructure is designed with a "Security First" mindset, utilizing public/private subnet isolation, strict IAM roles, and automated TLS management.
+The infrastructure is designed with a security-first approach, using public/private subnet isolation, strict IAM roles, and automated TLS management.
 
 ```mermaid
 graph TD
